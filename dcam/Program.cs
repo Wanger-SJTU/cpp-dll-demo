@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using ManageClass;
 
 namespace dcam
 {
@@ -26,7 +27,7 @@ namespace dcam
         [DllImport("../CAMAPI.dll", EntryPoint = "callTestByPoint", CallingConvention = CallingConvention.StdCall)]
         public static extern int callTest(ref Test testPtr);
 
-        static void Main(string[] args)
+        static void test()
         {
             // Console.WriteLine(Add(10, 12)); // test transfer by value
 
@@ -45,6 +46,19 @@ namespace dcam
             //res.b = 20;
             Console.WriteLine(callTest(ref res));
             Console.ReadKey();
+        }
+
+        static void test_managed()
+        {
+            NativeClassEx test = new NativeClassEx();
+            test.Increase();
+            Console.WriteLine(test.GetCount());
+            Console.ReadKey();
+
+        }
+        static void Main(string[] args)
+        {
+            test_managed();
         }
     }
 }
