@@ -48,17 +48,26 @@ namespace dcam
             Console.ReadKey();
         }
 
-        static void test_managed()
+        static void test_managedNative()
         {
             NativeClassEx test = new NativeClassEx();
-            test.Increase();
-            Console.WriteLine(test.GetCount());
+
+            //test.Increase();
+            //ClassInfoEx classInfo = new ClassInfoEx();
+            //Console.WriteLine(test.GetCount());
+            //test.getClassInfo(classInfo);
+            String tmp = "hello world";
+            test.setBufferContent(tmp, tmp.Length);
+            test.getBufferContent();
+
             Console.ReadKey();
 
         }
+       
         static void Main(string[] args)
         {
-            test_managed();
+            test_managedNative();
+
         }
     }
 }
