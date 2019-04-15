@@ -47,6 +47,11 @@ public:
 			buffer[i] = content[i];
 		}
 	}
+
+	void printChar(const char chr)
+	{
+		printf("%c", chr);
+	}
 	void getBufferContent()
 	{
 		int i = 0;

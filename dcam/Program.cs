@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Emgu.CV;
+using Emgu.CV.Structure;
 using ManageClass;
 
 namespace dcam
@@ -59,15 +61,54 @@ namespace dcam
             String tmp = "hello world";
             test.setBufferContent(tmp, tmp.Length);
             test.getBufferContent();
+            Char chr = 'a';
+            test.printChar(chr);
 
             Console.ReadKey();
 
         }
-       
+
+        static void test_char()
+        {
+            unsafe
+            {
+                
+                Mat test = new Mat();
+                Image<Gray, Byte> image = new Image<Gray, byte>(1024,1024);
+                for (int i = 0; i < 1024 ; i++)
+                {
+                    for (int j = 0; j < 1024; j++)
+                        image.Data[i,j,0] = (byte)0xFF;
+                }
+                CvInvoke.Imshow("as", image);
+            }
+        }
+        [DllImport("../CAMAPI.dll", EntryPoint = "getMat", CallingConvention = CallingConvention.StdCall)]
+        unsafe public static extern int GetMat(byte** content);
+        static void testChar()
+        {
+            unsafe
+            {
+                byte* tmp = null;
+                GetMat(&tmp);
+                //for (int i = 0; i < 500 * 500; i++)
+                //{
+                //    Console.WriteLine(tmp[i]);
+                //}
+                Mat test = new Mat();
+                Image<Gray, Byte> image = new Image<Gray, byte>(500, 500);
+                for (int i = 0; i < 500; i++)
+                {
+                    for (int j = 0; j < 500; j++)
+                        image.Data[i, j, 0] = (byte)tmp[i*500+j];
+                }
+                CvInvoke.Imshow("as", image);
+            }
+        }
         static void Main(string[] args)
         {
-            test_managedNative();
-
+            testChar();
+            Console.ReadKey();
         }
     }
 }
